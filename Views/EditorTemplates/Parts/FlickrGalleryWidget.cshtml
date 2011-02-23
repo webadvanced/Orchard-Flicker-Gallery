@@ -1,0 +1,60 @@
+﻿@model FlickrGallery.Models.FlickrGalleryWidgetPart
+@using FlickrGallery.Helpers
+@using FlickrGallery.Models
+
+@{
+    Script.Require("jQuery").AtFoot();
+    Script.Include("FlickrGalleryEditorScript.js");
+}
+
+<fieldset>
+    @Html.LabelFor(model => model.MaxImages)
+    @Html.TextBoxFor(model => model.MaxImages)
+    @Html.ValidationMessageFor(model => model.MaxImages)
+</fieldset>
+<fieldset>
+    @Html.LabelFor(model => model.Mode)
+    @Html.EnumDropDownList("Mode", Model.Mode)
+</fieldset>
+
+<!-- mode specific fields -->
+<div id="@GalleryMode.MostRecent" class="modeSection">
+
+</div>
+<div id="@GalleryMode.Gallery" class="modeSection">
+    <fieldset>
+        @Html.LabelFor(model => model.GalleryId)
+        @Html.TextBoxFor(model => model.GalleryId)
+    </fieldset>
+</div>
+<div id="@GalleryMode.PhotoSet" class="modeSection">
+    <fieldset>
+        @Html.LabelFor(model => model.PhotoSetId)
+        @Html.TextBoxFor(model => model.PhotoSetId)
+    </fieldset>
+</div>
+<div id="@GalleryMode.GroupPhotos" class="modeSection">
+    <fieldset>
+        @Html.LabelFor(model => model.GroupId)
+        @Html.TextBoxFor(model => model.GroupId)
+    </fieldset>
+</div>
+<div id="@GalleryMode.PhotosOfUser" class="modeSection">
+    <fieldset>
+        @Html.LabelFor(model => model.PhotosOfUserId)
+        @Html.TextBoxFor(model => model.PhotosOfUserId)
+    </fieldset>
+</div>
+<div id="@GalleryMode.PhotosUploadedByUser" class="modeSection">
+    <fieldset>
+        @Html.LabelFor(model => model.PhotosUploadedByUserId)
+        @Html.TextBoxFor(model => model.PhotosUploadedByUserId)
+    </fieldset>
+</div>
+<div id="@GalleryMode.SearchTags" class="modeSection">
+    <fieldset>
+        @Html.LabelFor(model => model.Tags)
+        @Html.TextBoxFor(model => model.Tags)
+    </fieldset>
+</div>
+<!-- end mode specific fields -->

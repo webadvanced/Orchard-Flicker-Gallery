@@ -1,0 +1,19 @@
+﻿@{
+    Script.Require("jQuery").AtFoot();
+    Script.Include("colorbox/jquery.colorbox-min.js");
+    Style.Include("colorbox.css");
+    Style.Include("flickrGallery.css");
+    Guid myGuid = System.Guid.NewGuid();
+}
+
+<ul class="flickrPhotos">
+
+    @foreach (var Photo in Model.Photos)
+    {
+        <li style="float: left">
+            <a rel="@myGuid.ToString()" target="_blank" href="@Photo.Url_Z">
+                <img src='@Photo.Url_SQ' alt='@Photo.Title' />
+            </a>
+        </li>
+    }
+</ul>
