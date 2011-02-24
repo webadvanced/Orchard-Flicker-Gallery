@@ -1,16 +1,16 @@
 ﻿$(document).ready(function () {
-    flickerAdmin.modeChanged(document.getElementById('Mode'));
-    $('#Mode').bind('change keyup', function () { modeChanged(this) });
+    flickrAdmin.modeChanged(document.getElementById('Mode'));
+    $('#Mode').bind('change keyup', function () { flickrAdmin.modeChanged(this) });
 });
 
-(function (flickerAdmin, $, undefined) { 
-    flickerAdmin.modeChanged = function(ddlMode) {
-        flickerAdmin.hideAllModes();
+(function (flickrAdmin, $, undefined) { 
+    flickrAdmin.modeChanged = function(ddlMode) {
+        flickrAdmin.hideAllModes();
         var selectedMode = ddlMode.options[ddlMode.selectedIndex].value;
         $('#' + selectedMode).show();
     }
 
-    flickerAdmin.hideAllModes = function() {
+    flickrAdmin.hideAllModes = function() {
         $(".modeSection").hide();
     }
-} (window.flickerAdmin = window.flickerAdmin || {}, jQuery));
+} (window.flickrAdmin = window.flickrAdmin || {}, jQuery));
