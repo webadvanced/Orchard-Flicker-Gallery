@@ -13,4 +13,4 @@
     flickerAdmin.hideAllModes = function() {
         $(".modeSection").hide();
     }
-} (window.flickerAdmin = window.flickerAdmin || {}, JQuery));
+} (window.flickerAdmin = window.flickerAdmin || {}, jQuery));
