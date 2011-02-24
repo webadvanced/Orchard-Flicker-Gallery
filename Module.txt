@@ -4,10 +4,10 @@ Author: Web Advanced
 Website: http://www.webadvanced.com
 Version: 1.0
 OrchardVersion: 1.0
-Description: Renders a gallery and displays photos uploaded to Flickr
+Description: Add any Flicker gallery on your Orchard site. 
 
 Features:
     FlickrGallery:
-        Description: Renders a gallery and displays photos uploaded to Flickr
+        Description: Add any Flicker gallery on your Orchard site.
         Category: Widget
         Dependencies: Orchard.Widgets
