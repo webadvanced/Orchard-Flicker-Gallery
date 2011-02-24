@@ -58,6 +58,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\border1.png" />
+    <Content Include="Images\border2.png" />
+    <Content Include="Images\internet_explorer\borderBottomCenter.png" />
+    <Content Include="Images\internet_explorer\borderBottomLeft.png" />
+    <Content Include="Images\internet_explorer\borderBottomRight.png" />
+    <Content Include="Images\internet_explorer\borderMiddleLeft.png" />
+    <Content Include="Images\internet_explorer\borderMiddleRight.png" />
+    <Content Include="Images\internet_explorer\borderTopCenter.png" />
+    <Content Include="Images\internet_explorer\borderTopLeft.png" />
+    <Content Include="Images\internet_explorer\borderTopRight.png" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\FlickrGalleryEditorScript.js" />
     <Content Include="Styles\colorbox.css" />
