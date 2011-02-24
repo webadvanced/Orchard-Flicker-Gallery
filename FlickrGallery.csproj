@@ -39,6 +39,33 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\Lib\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\Lib\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Web">
+      <HintPath>..\Lib\Autofac.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Web.Mvc">
+      <HintPath>..\Lib\Autofac.Integration.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2">
+      <HintPath>..\Lib\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.Log4netIntegration">
+      <HintPath>..\Lib\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="ClaySharp">
+      <HintPath>..\Lib\ClaySharp.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\Lib\FluentNHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -81,11 +108,11 @@
   <ItemGroup>
     <Reference Include="Orchard.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Orchard.Core.dll</HintPath>
+      <HintPath>..\Lib\Orchard.Core.dll</HintPath>
     </Reference>
     <Reference Include="Orchard.Framework">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Orchard.Framework.dll</HintPath>
+      <HintPath>..\Lib\Orchard.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +131,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Images\Web.config" />
     <None Include="Placement.info" />
     <Content Include="Views\Parts\FlickrGalleryWidget.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\FlickrGalleryWidget.cshtml" />

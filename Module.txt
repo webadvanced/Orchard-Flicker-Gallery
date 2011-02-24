@@ -2,12 +2,12 @@ Name: Flickr Gallery
 AntiForgery: enabled
 Author: Web Advanced
 Website: http://www.webadvanced.com
-Version: 1.1
-OrchardVersion: 1.1
-Description: Add any Flicker gallery on your Orchard site. 
+Version: 1.2
+OrchardVersion: 1.2
+Description: Add any Flicker gallery to your Orchard site. 
 
 Features:
     FlickrGallery:
-        Description: Add any Flicker gallery on your Orchard site.
+        Description: Add any Flicker gallery to your Orchard site.
         Category: Widget
         Dependencies: Orchard.Widgets
