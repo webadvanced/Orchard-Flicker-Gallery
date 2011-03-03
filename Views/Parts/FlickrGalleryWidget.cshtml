@@ -1,19 +1,15 @@
-﻿@{
+﻿@using FlickrGallery.Helpers
+@using FlickrGallery.Models
+
+@{
     Script.Require("jQuery").AtFoot();
     Script.Include("colorbox/jquery.colorbox-min.js");
+    Script.Include("gload/jquery-gload-min.js");
+    Script.Include("FlickrGalleryViewScript.js");
     Style.Include("colorbox.css");
     Style.Include("flickrGallery.css");
-    Guid myGuid = System.Guid.NewGuid();
+    Guid myGuid = Guid.NewGuid();
+    
 }
 
-<ul class="flickrPhotos">
-
-    @foreach (var Photo in Model.Photos)
-    {
-        <li style="float: left">
-            <a rel="@myGuid.ToString()" target="_blank" href="@Photo.Url_Z">
-                <img src='@Photo.Url_SQ' alt='@Photo.Title' />
-            </a>
-        </li>
-    }
-</ul>
+@Html.GetAblumHtml((List<FlickrPhoto>)Model.Photos, (bool)Model.DisableModalGallery, (bool)Model.DisableLazyLoading)

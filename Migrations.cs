@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
 using FlickrGallery.Models;
+using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.MetaData;
+using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 
@@ -29,11 +33,23 @@ namespace FlickrGallery {
                 .WithPart("WidgetPart")
                 .WithPart("CommonPart")
                 .WithSetting("Stereotype", "Widget"));
+
+
             return 1;
         }
 
-        public int UpdateFrom1() {
+        public int UpdateFrom1()
+        {
             return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            SchemaBuilder.AlterTable("FlickrGalleryWidgetRecord", table => table.AddColumn("DisableModalGallery", DbType.Boolean));
+            SchemaBuilder.AlterTable("FlickrGalleryWidgetRecord", table => table.AddColumn("DisableLazyLoading", DbType.Boolean));
+            SchemaBuilder.AlterTable("FlickrGalleryWidgetRecord", table => table.AddColumn("DisableCaching", DbType.Boolean));
+            SchemaBuilder.AlterTable("FlickrGalleryWidgetRecord", table => table.AddColumn("CacheDuration", DbType.Int32));
+            return 3;
         }
     }
 }
