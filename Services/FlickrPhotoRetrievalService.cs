@@ -10,6 +10,8 @@ using System.Xml.Linq;
 using JetBrains.Annotations;
 using FlickrGallery.Contracts.Services;
 using FlickrGallery.Models;
+using Orchard.Caching;
+using System.Threading;
 
 namespace FlickrGallery.Services
 {
@@ -21,48 +23,104 @@ namespace FlickrGallery.Services
         string FlickrAPISecret = "2c1e1e2b0972b9d6";
         string FlickrAPIUrl = "http://api.flickr.com/services/rest/?method={0}&api_key={1}";
 
+
+        protected readonly string CacheKeyPrefix = "flickrPhotos_";
+        protected ICacheManager CacheManager { get; private set; }
+        protected ISignals Signals { get; private set; }
+        protected Timer Timer { get; private set; }
+
+        public FlickrPhotoRetrievalService(ICacheManager cacheManager, ISignals signals)
+        {
+            this.CacheManager = cacheManager;
+            this.Signals = signals;
+        }
+
         public List<FlickrPhoto> GetPhotos(FlickrGalleryWidgetPart part)
         {
-            List<FlickrPhoto> Photos;
+            if(part.DisableCaching)
+            {
+                return RetrievePhotos(part).Take(part.MaxImages).ToList();
+            }
+            else
+            {
+                var cacheKey = CacheKeyPrefix + (int)part.Mode;
+                switch (part.Mode)
+                {
+                    case GalleryMode.MostRecent:
+                        break;
+                    case GalleryMode.PhotoSet:
+                        cacheKey += part.PhotoSetId;
+                        break;
+                    case GalleryMode.Gallery:
+                        cacheKey += part.GalleryId;
+                        break;
+                    case GalleryMode.PhotosOfUser:
+                        cacheKey += part.PhotosOfUserId;
+                        break;
+                    case GalleryMode.PhotosUploadedByUser:
+                        cacheKey += part.PhotosUploadedByUserId;
+                        break;
+                    case GalleryMode.GroupPhotos:
+                        cacheKey += part.GroupId;
+                        break;
+                    case GalleryMode.SearchTags:
+                        cacheKey += part.Tags;
+                        break;
+                    default:
+                        break;
+                }
+
+                return CacheManager.Get(cacheKey, ctx =>
+                {
+                    ctx.Monitor(Signals.When(cacheKey));
+                    Timer = new Timer(t => Signals.Trigger(cacheKey), part, TimeSpan.FromMinutes(part.CacheDuration), TimeSpan.FromMilliseconds(-1));
+                    return RetrievePhotos(part).Take(part.MaxImages).ToList();
+                });
+            }
+        }
+
+        private List<FlickrPhoto> RetrievePhotos(FlickrGalleryWidgetPart part)
+        {
+            List<FlickrPhoto> photos;
             switch (part.Mode)
             {
                 case GalleryMode.MostRecent:
-                    Photos = GetAllRecent();
+                    photos = GetAllRecent();
                     break;
                 case GalleryMode.PhotoSet:
-                    Photos = GetPhotosOfPhotoSet(part.PhotoSetId);
+                    photos = GetPhotosOfPhotoSet(part.PhotoSetId);
                     break;
                 case GalleryMode.Gallery:
-                    Photos = GetPhotosOfGallery(part.GalleryId);
+                    photos = GetPhotosOfGallery(part.GalleryId);
                     break;
                 case GalleryMode.PhotosOfUser:
-                    Photos = GetPhotosOfUser(part.PhotosOfUserId);
+                    photos = GetPhotosOfUser(part.PhotosOfUserId);
                     break;
                 case GalleryMode.PhotosUploadedByUser:
-                    Photos = GetUserPublicPhotos(part.PhotosUploadedByUserId);
+                    photos = GetUserPublicPhotos(part.PhotosUploadedByUserId);
                     break;
                 case GalleryMode.GroupPhotos:
-                    Photos = GetPhotosOfGroup(part.GroupId);
+                    photos = GetPhotosOfGroup(part.GroupId);
                     break;
                 case GalleryMode.SearchTags:
-                    Photos = GetPhotosByTags(part.Tags);
+                    photos = GetPhotosByTags(part.Tags);
                     break;
                 default:
-                    Photos = new List<FlickrPhoto>();
+                    photos = new List<FlickrPhoto>();
                     break;
             }
 
-            return Photos.Take(part.MaxImages).ToList();
+            return photos.ToList();
         }
 
-        public List<FlickrPhoto> GetAllRecent()
+        private List<FlickrPhoto> GetAllRecent()
         {
             string response = GetResponseFromFlickr(FlickrAPIUrl, FlickrAPIKey, "flickr.photos.getRecent", new Dictionary<string, string>());
 
             return DeserializePhotos(response);
         }
 
-        public List<FlickrPhoto> GetPhotosOfPhotoSet(string photoSetId)
+        private List<FlickrPhoto> GetPhotosOfPhotoSet(string photoSetId)
         {
             var AdditionalQueryStringParameters = new Dictionary<string, string>();
             AdditionalQueryStringParameters.Add("photoset_id", photoSetId);
@@ -72,7 +130,7 @@ namespace FlickrGallery.Services
             return DeserializePhotos(response);
         }
 
-        public List<FlickrPhoto> GetPhotosOfGallery(string galleryId)
+        private List<FlickrPhoto> GetPhotosOfGallery(string galleryId)
         {
             var AdditionalQueryStringParameters = new Dictionary<string, string>();
             AdditionalQueryStringParameters.Add("gallery_id", galleryId);
@@ -81,7 +139,7 @@ namespace FlickrGallery.Services
             return DeserializePhotos(response);
         }
 
-        public List<FlickrPhoto> GetPhotosOfUser(string userId)
+        private List<FlickrPhoto> GetPhotosOfUser(string userId)
         {
             var AdditionalQueryStringParameters = new Dictionary<string, string>();
             AdditionalQueryStringParameters.Add("user_id", userId);
@@ -91,7 +149,7 @@ namespace FlickrGallery.Services
             return DeserializePhotos(response);
         }
 
-        public List<FlickrPhoto> GetUserPublicPhotos(string userId)
+        private List<FlickrPhoto> GetUserPublicPhotos(string userId)
         {
             var AdditionalQueryStringParameters = new Dictionary<string, string>();
             AdditionalQueryStringParameters.Add("user_id", userId);
@@ -101,7 +159,7 @@ namespace FlickrGallery.Services
             return DeserializePhotos(response);
         }
 
-        public List<FlickrPhoto> GetPhotosOfGroup(string groupId)
+        private List<FlickrPhoto> GetPhotosOfGroup(string groupId)
         {
             var AdditionalQueryStringParameters = new Dictionary<string, string>();
             AdditionalQueryStringParameters.Add("group_id", groupId);
@@ -111,7 +169,7 @@ namespace FlickrGallery.Services
             return DeserializePhotos(response);
         }
 
-        public List<FlickrPhoto> GetPhotosByTags(string tags)
+        private List<FlickrPhoto> GetPhotosByTags(string tags)
         {
             var AdditionalQueryStringParameters = new Dictionary<string, string>();
             AdditionalQueryStringParameters.Add("tags", tags);

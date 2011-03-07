@@ -19,6 +19,10 @@ namespace FlickrGallery.Models
         public virtual string PhotosUploadedByUserId { get; set; }
         public virtual string GroupId { get; set; }
         public virtual string Tags { get; set; }
+        public virtual bool DisableModalGallery { get; set; }
+        public virtual bool DisableLazyLoading { get; set; }
+        public virtual bool DisableCaching { get; set; }
+        public virtual int CacheDuration { get; set; }
     }
 
     public enum GalleryMode : int
@@ -100,6 +104,34 @@ namespace FlickrGallery.Models
         {
             get { return Record.Tags; }
             set { Record.Tags = value; }
+        }
+
+        [DisplayName("Disables default modal gallery behavior")]
+        public bool DisableModalGallery
+        {
+            get { return Record.DisableModalGallery; }
+            set { Record.DisableModalGallery = value; }
+        }
+
+        [DisplayName("Disables default lazy loading of images")]
+        public bool DisableLazyLoading
+        {
+            get { return Record.DisableLazyLoading; }
+            set { Record.DisableLazyLoading = value; }
+        }
+
+        [DisplayName("Disables caching of images")]
+        public bool DisableCaching
+        {
+            get { return Record.DisableCaching; }
+            set { Record.DisableCaching = value; }
+        }
+
+        [DisplayName("Duration of time to cache images (in minutes)")]
+        public int CacheDuration
+        {
+            get { return Record.CacheDuration; }
+            set { Record.CacheDuration = value; }
         }
     }
 }

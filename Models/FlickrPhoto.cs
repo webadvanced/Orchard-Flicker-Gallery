@@ -50,6 +50,5 @@
         public string Url_O { get; set; }
         public int Height_O { get; set; }
         public int Width_O { get; set; }
-
     }
 }

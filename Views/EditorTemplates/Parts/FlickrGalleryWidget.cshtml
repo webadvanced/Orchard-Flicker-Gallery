@@ -7,54 +7,78 @@
     Script.Include("FlickrGalleryEditorScript.js");
 }
 
+<style type="text/css">
+    .inline label { display:inline; }
+</style>
+
+
 <fieldset>
+<legend><b>Flickr Gallery Settings</b></legend>
+
+<div class="inline">
+    @Html.CheckBoxFor(model => model.DisableModalGallery)
+    @Html.LabelFor(model => model.DisableModalGallery)
+</div>
+<div class="inline">
+    <br />
+    @Html.CheckBoxFor(model => model.DisableLazyLoading)
+    @Html.LabelFor(model => model.DisableLazyLoading)
+</div>
+<div class="inline">
+    <br />
+    @Html.CheckBoxFor(model => model.DisableCaching)
+    @Html.LabelFor(model => model.DisableCaching)
+</div>
+<div class="cacheDurationSection">
+    @Html.LabelFor(model => model.CacheDuration)
+    @Html.TextBoxFor(model => model.CacheDuration)
+    @Html.ValidationMessageFor(model => model.CacheDuration)
+</div>
+<div>
+    <br />
     @Html.LabelFor(model => model.MaxImages)
     @Html.TextBoxFor(model => model.MaxImages)
     @Html.ValidationMessageFor(model => model.MaxImages)
-</fieldset>
-<fieldset>
+</div>
+<div>
+    <br />
     @Html.LabelFor(model => model.Mode)
     @Html.EnumDropDownList("Mode", Model.Mode)
-</fieldset>
+</div>
 
 <!-- mode specific fields -->
 <div id="@GalleryMode.MostRecent" class="modeSection">
-
+    <br />
 </div>
 <div id="@GalleryMode.Gallery" class="modeSection">
-    <fieldset>
-        @Html.LabelFor(model => model.GalleryId)
-        @Html.TextBoxFor(model => model.GalleryId)
-    </fieldset>
+    @Html.LabelFor(model => model.GalleryId)
+    @Html.TextBoxFor(model => model.GalleryId)
+    <br />
 </div>
 <div id="@GalleryMode.PhotoSet" class="modeSection">
-    <fieldset>
-        @Html.LabelFor(model => model.PhotoSetId)
-        @Html.TextBoxFor(model => model.PhotoSetId)
-    </fieldset>
+    @Html.LabelFor(model => model.PhotoSetId)
+    @Html.TextBoxFor(model => model.PhotoSetId)
+    <br />
 </div>
 <div id="@GalleryMode.GroupPhotos" class="modeSection">
-    <fieldset>
-        @Html.LabelFor(model => model.GroupId)
-        @Html.TextBoxFor(model => model.GroupId)
-    </fieldset>
+    @Html.LabelFor(model => model.GroupId)
+    @Html.TextBoxFor(model => model.GroupId)
+    <br />
 </div>
 <div id="@GalleryMode.PhotosOfUser" class="modeSection">
-    <fieldset>
-        @Html.LabelFor(model => model.PhotosOfUserId)
-        @Html.TextBoxFor(model => model.PhotosOfUserId)
-    </fieldset>
+    @Html.LabelFor(model => model.PhotosOfUserId)
+    @Html.TextBoxFor(model => model.PhotosOfUserId)
+    <br />
 </div>
 <div id="@GalleryMode.PhotosUploadedByUser" class="modeSection">
-    <fieldset>
-        @Html.LabelFor(model => model.PhotosUploadedByUserId)
-        @Html.TextBoxFor(model => model.PhotosUploadedByUserId)
-    </fieldset>
+    @Html.LabelFor(model => model.PhotosUploadedByUserId)
+    @Html.TextBoxFor(model => model.PhotosUploadedByUserId)
+    <br />
 </div>
 <div id="@GalleryMode.SearchTags" class="modeSection">
-    <fieldset>
-        @Html.LabelFor(model => model.Tags)
-        @Html.TextBoxFor(model => model.Tags)
-    </fieldset>
+    @Html.LabelFor(model => model.Tags)
+    @Html.TextBoxFor(model => model.Tags)
+    <br />
 </div>
 <!-- end mode specific fields -->
+</fieldset>

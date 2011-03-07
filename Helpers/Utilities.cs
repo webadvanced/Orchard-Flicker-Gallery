@@ -18,5 +18,11 @@ namespace FlickrGallery.Helpers
             else 
                 return value.ToString();
         }
+
+        public static string GeneratePhotoUrl(string userId, string photoId)
+        {
+            string url = "http://www.flickr.com/photos/{0}/{1}";
+            return string.Format(url, userId, photoId);
+        }
     }
 }

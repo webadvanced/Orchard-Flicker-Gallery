@@ -30,8 +30,8 @@ namespace FlickrGallery.Drivers
             return ContentShape("Parts_FlickrGalleryWidget",
                 () => shapeHelper.Parts_FlickrGalleryWidget(
                     Photos: FlickrPhotoRetrievalService.GetPhotos(part),
-                    MaxImages: part.MaxImages,
-                    Mode: part.Mode
+                    DisableModalGallery: part.DisableModalGallery,
+                    DisableLazyLoading: part.DisableLazyLoading
                     ));
         }
 

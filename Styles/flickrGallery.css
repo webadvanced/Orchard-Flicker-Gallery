@@ -1,2 +1,4 @@
 ﻿.flickrPhotos { list-style-type: none; }
-.flickrPhotos li { padding: 10px; }
+.flickrPhotos div { padding: 5px; width: 75px; height: 75px; float: left; }
+.flickrPhotos img { width: 75px; height: 75px; }
+.cursorHand { cursor: hand; }
